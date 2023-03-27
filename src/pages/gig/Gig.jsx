@@ -13,6 +13,7 @@ function Gig() {
     queryKey: ["gig"],
     queryFn: () => newRequest.get(`/gigs/single/${id}`).then((res) => res.data),
   });
+
   const userId = data?.userId;
 
   const {

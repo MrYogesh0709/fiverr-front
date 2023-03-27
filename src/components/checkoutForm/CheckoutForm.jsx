@@ -68,7 +68,6 @@ const CheckoutForm = () => {
     } else {
       setMessage("An unexpected error occurred.");
     }
-
     setIsLoading(false);
   };
 
