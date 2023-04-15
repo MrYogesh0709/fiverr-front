@@ -6,7 +6,12 @@ const Featured = () => {
   const [input, setInput] = useState("");
   const navigate = useNavigate();
   const handleSubmit = () => {
-    navigate(`/gigs?search=${input}`);
+    console.log(input);
+    if (!input) {
+      navigate("/");
+    } else {
+      navigate(`/gigs?search=${input}`);
+    }
   };
   return (
     <div className="featured">

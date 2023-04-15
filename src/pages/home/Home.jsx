@@ -1,7 +1,7 @@
 import React from "react";
 import "./Home.scss";
 import { CatCard, Featured, Slide, TrustedBy } from "../../components";
-import { cards, projects } from "../../data";
+import { projects } from "../../data";
 import ProjectCard from "../../components/projectCard/ProjectCard";
 import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
