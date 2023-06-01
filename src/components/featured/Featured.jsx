@@ -6,7 +6,6 @@ const Featured = () => {
   const [input, setInput] = useState("");
   const navigate = useNavigate();
   const handleSubmit = () => {
-    console.log(input);
     if (!input) {
       navigate("/");
     } else {

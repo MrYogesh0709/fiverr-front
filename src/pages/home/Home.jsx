@@ -14,17 +14,17 @@ const Home = () => {
     <div className="home">
       <Featured />
       <TrustedBy />
-      {isLoading ? (
-        "loading"
-      ) : error ? (
-        "error"
-      ) : (
-        <Slide slidesToShow={5} arrowsScroll={5}>
-          {data?.map((card) => (
-            <CatCard key={card._id} item={card} />
-          ))}
-        </Slide>
-      )}
+      {isLoading
+        ? "loading"
+        : error
+        ? "error"
+        : data.length !== 0 && (
+            <Slide slidesToShow={5} arrowsScroll={5}>
+              {data.map((card) => (
+                <CatCard key={card._id} item={card} />
+              ))}
+            </Slide>
+          )}
       <div className="features">
         <div className="container">
           <div className="item">
