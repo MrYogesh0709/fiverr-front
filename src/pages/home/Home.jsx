@@ -10,21 +10,38 @@ const Home = () => {
     queryKey: ["gigs"],
     queryFn: () => newRequest.get(`/gigs`).then((res) => res.data),
   });
+
   return (
     <div className="home">
       <Featured />
       <TrustedBy />
-      {isLoading
-        ? "loading"
-        : error
-        ? "error"
-        : data.length !== 0 && (
-            <Slide slidesToShow={5} arrowsScroll={5}>
-              {data.map((card) => (
-                <CatCard key={card._id} item={card} />
-              ))}
-            </Slide>
+      {isLoading ? (
+        <div
+          style={{
+            margin: "2rem",
+            display: "flex",
+            gap: "1rem",
+            justifyContent: "space-evenly",
+          }}
+        >
+          {Array.from({ length: 4 }, (_, index) => ({ id: index })).map(
+            (card, index) => (
+              <CatCard key={index} item={card} />
+            )
           )}
+        </div>
+      ) : error ? (
+        "error"
+      ) : (
+        data.length !== 0 && (
+          <Slide slidesToShow={5} arrowsScroll={5}>
+            {data.map((card) => (
+              <CatCard key={card._id} item={card} />
+            ))}
+          </Slide>
+        )
+      )}
+
       <div className="features">
         <div className="container">
           <div className="item">
