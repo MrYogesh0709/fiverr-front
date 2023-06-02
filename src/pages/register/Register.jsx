@@ -15,6 +15,7 @@ function Register() {
     isSeller: false,
     desc: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -32,14 +33,25 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    if (
+      !user.username ||
+      !user.password ||
+      !user.email ||
+      !user.country ||
+      !user.isSeller
+    ) {
+      alert("All fields are required");
+      return;
+    }
     const url = await upload(file);
     try {
+      setLoading(true);
       await newRequest.post("/auth/register", {
         ...user,
         img: url,
       });
       navigate("/");
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -75,7 +87,9 @@ function Register() {
             placeholder="Usa"
             onChange={handleChange}
           />
-          <button type="submit">Register</button>
+          <button type="submit" disabled={loading}>
+            Register
+          </button>
         </div>
         <div className="right">
           <h1>I want to become a seller</h1>
@@ -97,7 +111,6 @@ function Register() {
           <textarea
             placeholder="A short description of yourself"
             name="desc"
-            id=""
             cols="30"
             rows="10"
             onChange={handleChange}

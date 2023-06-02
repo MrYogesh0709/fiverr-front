@@ -12,6 +12,10 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!username || !password) {
+      setError("Please enter username and password");
+      return;
+    }
     try {
       const res = await newRequest.post("/auth/login", { username, password });
       localStorage.setItem("currentUser", JSON.stringify(res.data));

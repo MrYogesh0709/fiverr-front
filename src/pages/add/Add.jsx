@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useReducer, useState } from "react";
 import { gigReducer, INITIAL_STATE } from "../../reducers/gigReducer";
 import { useNavigate } from "react-router-dom";
@@ -24,6 +24,9 @@ const Add = () => {
 
   const handleFeature = (e) => {
     e.preventDefault();
+    if (!e.target[0].value) {
+      return;
+    }
     dispatch({
       type: "ADD_FEATURE",
       payload: e.target[0].value,
@@ -32,6 +35,10 @@ const Add = () => {
   };
 
   const handleUpload = async () => {
+    if (!singleFile) {
+      alert("Please upload cover image");
+      return;
+    }
     setUploading(true);
     try {
       const cover = await upload(singleFile);
@@ -59,6 +66,21 @@ const Add = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(state);
+    if (
+      !state.cat ||
+      !state.deliveryTime ||
+      !state.desc ||
+      !state.price ||
+      !state.deliveryTime ||
+      !state.shortDesc ||
+      !state.shortTitle ||
+      !state.title ||
+      !state.cover
+    ) {
+      alert("please fill all fields");
+      return;
+    }
     mutation.mutate(state);
     navigate("/mygigs");
   };
@@ -73,12 +95,13 @@ const Add = () => {
             <input
               type="text"
               name="title"
+              required
               placeholder="e.g. I will do something I'm really good at"
               onChange={handleChange}
             />
 
-            <label htmlFor="">Category</label>
-            <select name="cat" id="cat" onChange={handleChange}>
+            <label htmlFor="cat">Category</label>
+            <select name="cat" id="cat" onChange={handleChange} required>
               <option value="design">Design</option>
               <option value="web">Web Development</option>
               <option value="animation">Animation</option>
@@ -90,6 +113,7 @@ const Add = () => {
                 <label htmlFor="">Cover Image</label>
                 <input
                   type="file"
+                  required
                   onChange={(e) => setSingleFile(e.target.files[0])}
                 />
                 <label htmlFor="">Upload Images</label>
@@ -104,10 +128,11 @@ const Add = () => {
               </button>
             </div>
 
-            <label htmlFor="">Description</label>
+            <label htmlFor="desc">Description</label>
             <textarea
+              required
               name="desc"
-              id=""
+              id="desc"
               placeholder="Brief descriptions to introduce your service to customers"
               cols="0"
               rows="16"
@@ -116,42 +141,52 @@ const Add = () => {
             <button onClick={handleSubmit}>Create</button>
           </div>
           <div className="details">
-            <label htmlFor="">Service Title</label>
+            <label htmlFor="title">Service Title</label>
             <input
               type="text"
+              id="title"
+              required
               placeholder="e.g. One-page web design"
               onChange={handleChange}
               name="shortTitle"
             />
 
-            <label htmlFor="">Short Description</label>
+            <label htmlFor="shortDesc">Short Description</label>
             <textarea
               name="shortDesc"
               onChange={handleChange}
-              id=""
+              id="shortDesc"
+              required
               placeholder="Short description of your service"
               cols="30"
               rows="10"
             ></textarea>
 
-            <label htmlFor="">Delivery Time (e.g. 3 days)</label>
-            <input type="number" name="deliveryTime" onChange={handleChange} />
-
-            <label htmlFor="">Revision Number</label>
+            <label htmlFor="time">Delivery Time (e.g. 3 days)</label>
             <input
               type="number"
+              id="time"
+              name="deliveryTime"
+              onChange={handleChange}
+            />
+
+            <label htmlFor="revisionNumber">Revision Number</label>
+            <input
+              type="number"
+              id="revisionNumber"
+              required
               name="revisionNumber"
               onChange={handleChange}
             />
 
-            <label htmlFor="">Add Features</label>
-            <form action="" onSubmit={handleFeature} className="add">
+            <label>Add Features</label>
+            <form onSubmit={handleFeature} className="add">
               <input type="text" placeholder="e.g. page design" />
               <button type="submit">add</button>
             </form>
             <div className="addedFeatures">
-              {state?.features?.map((f) => (
-                <div className="item" key={f}>
+              {state?.features?.map((f, index) => (
+                <div className="item" key={index}>
                   <button
                     onClick={() =>
                       dispatch({ type: "REMOVE_FEATURES", payload: f })

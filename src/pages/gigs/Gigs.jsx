@@ -27,7 +27,6 @@ const Gigs = () => {
         )
         .then((res) => res.data),
   });
-
   const apply = () => {
     refetch();
   };
