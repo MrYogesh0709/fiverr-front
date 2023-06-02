@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const newRequest = axios.create({
-  baseURL: "https://fiver-back.onrender.com/api/",
-  // baseURL: "http://localhost:5000/api/",
+  baseURL: import.meta.env.VITE_API_BASE_URL,
   withCredentials: true,
 });
 
