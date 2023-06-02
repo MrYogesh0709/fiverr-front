@@ -51,6 +51,7 @@ function Gig() {
                   alt=""
                 />
                 <span>{dataUser.username}</span>
+
                 {!isNaN(data.totalStars / data.starNumber) && (
                   <div className="stars">
                     {Array(Math.round(data.totalStars / data.starNumber))
@@ -63,11 +64,14 @@ function Gig() {
                 )}
               </div>
             )}
-            <Slider slidesToShow={1} arrowsScroll={1} className="slider">
-              {data?.images?.map((img) => (
-                <img key={img} src={img} alt="" />
-              ))}
-            </Slider>
+
+            {data.length > 0 && (
+              <Slider slidesToShow={1} arrowsScroll={1} className="slider">
+                {data?.images?.map((img) => (
+                  <img key={img} src={img} alt="" />
+                ))}
+              </Slider>
+            )}
 
             <h2>About This Gig</h2>
             <p>{data.desc}</p>
