@@ -5,6 +5,7 @@ import { projects } from "../../data";
 import ProjectCard from "../../components/projectCard/ProjectCard";
 import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
+
 const Home = () => {
   const { isLoading, error, data } = useQuery({
     queryKey: ["gigs"],
